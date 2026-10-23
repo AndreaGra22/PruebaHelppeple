@@ -1,0 +1,10 @@
+
+node_modules/
+.env
+playwright-report/
+playwright-demo-report/
+test-results/
+test-results-demo/
+blob-report/
+*.zip
+.DS_Store

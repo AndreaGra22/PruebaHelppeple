@@ -1,0 +1,23 @@
+{
+  "name": "helppeople-qa-lead-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prueba técnica Líder QA HelpPeople",
+  "scripts": {
+    "test": "node runner.js --suite=regression",
+    "test:smoke": "node runner.js --suite=smoke",
+    "test:regression": "node runner.js --suite=regression",
+    "test:headless": "node runner.js --suite=regression",
+    "test:headed": "node runner.js --suite=regression --headed",
+    "test:list": "node runner.js --list",
+    "report": "playwright show-report playwright-report",
+    "demo:failure": "node runner.js --demo-failure"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "dotenv": "16.6.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
