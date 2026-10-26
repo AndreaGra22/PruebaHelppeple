@@ -1,14 +1,14 @@
-Prueba técnica Líder QA — HelpPeople
+## Prueba técnica Líder QA — HelpPeople
 
     Automatización web con Playwright Test, Node.js, JavaScript y Chromium, usando SauceDemo como aplicación de práctica.
 
-    Objetivo y alcance
+  ##  Objetivo y alcance
 
         La solución automatiza seis escenarios UI, organizados en Page Objects y ejecutables desde consola. El objetivo es demostrar cobertura basada en riesgo, pruebas independientes, configuración por ambiente, diagnóstico con evidencias y decisiones de calidad.
 
         Se eligió SauceDemo porque ofrece un inventario, inicio de sesión de demostración, carrito y checkout, sin conexión a HelpPeople ni uso de datos internos.
 
-    Reglas de negocio cubiertas
+  ##  Reglas de negocio cubiertas
 
         -El usuario estándar puede ingresar al inventario.
        - El usuario bloqueado no puede iniciar sesión y recibe un mensaje de rechazo.
@@ -19,24 +19,24 @@ Prueba técnica Líder QA — HelpPeople
 
     Limitación importante: SauceDemo es un sitio de demostración de terceros. Este proyecto valida el recorrido de compra desde UI, el resumen y la confirmación final. La aplicación no proporciona un endpoint público de pedidos ni un historial adecuado para comprobar persistencia externa después de cerrar la sesión. No se declara cobertura API ni persistencia backend que no se haya verificado.
 
-    Requisitos
+  ##  Requisitos
 
        - Node.js 20 o superior; se recomienda una versión LTS compatible.
         npm incluido con Node.js.
        - Acceso a Internet para instalar dependencias y abrir SauceDemo.
        - Chromium instalado mediante Playwright.
 
-    Instalación
+   ## Instalación
         Clona el repositorio o abre la carpeta del proyecto en Visual Studio Code. Ejecuta los comandos desde la raíz, donde se encuentra package.json.
             npm ci
             npx playwright install chromium
 
-    Usuarios de prueba
+  ##  Usuarios de prueba
         Propósito	          Usuario	    Contraseña
         Acceso válido	    standard_user	secret_sauce
         Usuario bloqueado	locked_out_user	secret_sauce
 
-    Casos de prueba
+  ##  Casos de prueba
 
         QA01	
             Acceso válido	      
@@ -70,7 +70,7 @@ Prueba técnica Líder QA — HelpPeople
     Cada prueba debe crear su propio contexto de navegador y preparar sus datos; no debe depender del resultado ni del orden de otra prueba. Para localizar los elementos se priorizan atributos estables data-test, roles y nombres accesibles. Las aserciones comprueban estado y contenido, no solo que un mensaje o clic haya ocurrido.
 
 
-    Ejecución desde consola
+   ## Ejecución desde consola
         Listar pruebas sin ejecutarlas
             node runner.js --env=demo --suite=regression --list
             
@@ -87,7 +87,7 @@ Prueba técnica Líder QA — HelpPeople
         Ejecutar con Chromium visible
             node runner.js --env=demo --suite=smoke --headed
 
-    Ambientes
+   ## Ambientes
         El archivo config/environments.js mantiene la configuración fuera de los casos.
             - demo: usa BASE_URL_DEMO o https://www.saucedemo.com.
             - example: perfil de ejemplo sin credenciales; usa BASE_URL_EXAMPLE. Su valor inicial es https://example.invalid y debe cambiarse por una URL autorizada antes de utilizarlo.
@@ -97,7 +97,7 @@ Prueba técnica Líder QA — HelpPeople
 
             El perfil alternativo solo funcionará sin cambios adicionales si la aplicación configurada ofrece un flujo y selectores compatibles con estos casos. Cambiar la URL no adapta automáticamente los Page Objects a otra aplicación.
 
-    Reporte HTML y evidencias
+   ## Reporte HTML y evidencias
         Las ejecuciones normales están configuradas para generar:
         - Reporte HTML en playwright-report/.
         - Capturas y trazas ante fallos en test-results/.
@@ -105,7 +105,7 @@ Prueba técnica Líder QA — HelpPeople
 
         npm run report
 
-    Publicación en GitHub
+  ## Publicación en GitHub
         Crea un repositorio vacío en GitHub. Desde la raíz del proyecto:
             git init -b main
             git add .
@@ -115,3 +115,12 @@ Prueba técnica Líder QA — HelpPeople
             git push -u origin main
             git rev-parse HEAD
     
+##  Balance de entrega
+
+### 1. Declaración de uso de inteligencia artificial
+
+Se utilizó ChatGPT como herramienta de apoyo para estructurar el proyecto, desarrollar y depurar código de Playwright, analizar errores de ejecución y preparar la documentación técnica y la estrategia de calidad. Las ejecuciones y los resultados deben verificarse en el entorno local antes de ser reportados como definitivos.
+
+### 2. Estado de entrega
+
+La solución cuenta con una base de automatización funcional y seis escenarios definidos. La entrega se considera en proceso de ajuste hasta completar la demostración de persistencia, generar y conservar las evidencias solicitadas, eliminar las pruebas ajenas al alcance y verificar la ejecución final de las suites.

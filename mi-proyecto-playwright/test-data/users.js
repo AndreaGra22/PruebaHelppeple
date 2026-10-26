@@ -1,7 +1,40 @@
-// Credenciales públicas de demostración documentadas por SauceDemo; no son datos privados.
-const users = {
-  standard: { username: 'standard_user', password: 'secret_sauce' },
-  locked: { username: 'locked_out_user', password: 'secret_sauce' },
-  invalid: { username: 'standard_user', password: 'wrong_password' },
+
+'use strict';
+
+const path = require('path');
+
+// Cargar el archivo .env situado en la raíz del proyecto
+require('dotenv').config({
+  path: path.resolve(__dirname, '../.env')
+});
+
+function requiredEnv(name) {
+  const value = process.env[name];
+
+  if (!value) {
+    throw new Error(
+      `Falta la variable de entorno ${name}. ` +
+      'Verifica el archivo .env en la raíz del proyecto.'
+    );
+  }
+
+  return value;
+}
+
+const standardUser = {
+  username: requiredEnv('SAUCE_STANDARD_USER'),
+  password: requiredEnv('SAUCE_STANDARD_PASSWORD')
 };
+
+const lockedUser = {
+  username: requiredEnv('SAUCE_LOCKED_USER'),
+  password: requiredEnv('SAUCE_LOCKED_PASSWORD')
+};
+
+const users = {
+  standard: standardUser,
+  valid: standardUser,
+  locked: lockedUser
+};
+
 module.exports = { users };

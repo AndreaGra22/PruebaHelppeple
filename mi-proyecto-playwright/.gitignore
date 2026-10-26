@@ -8,3 +8,12 @@ test-results-demo/
 blob-report/
 *.zip
 .DS_Store
+
+# Credenciales y variables locales
+.env
+
+# Dependencias
+node_modules/
+
+# Resultados temporales de Playwright
+test-results/
