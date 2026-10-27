@@ -3,7 +3,6 @@
 
 const path = require('path');
 
-// Cargar el archivo .env situado en la raíz del proyecto
 require('dotenv').config({
   path: path.resolve(__dirname, '../.env')
 });
@@ -13,23 +12,35 @@ function requiredEnv(name) {
 
   if (!value) {
     throw new Error(
-      `Falta la variable de entorno ${name}. ` +
-      'Verifica el archivo .env en la raíz del proyecto.'
+      `Falta la variable ${name}. ` +
+      'Copia .env.example a .env y revisa su configuración.'
     );
   }
 
   return value;
 }
 
-const standardUser = {
-  username: requiredEnv('SAUCE_STANDARD_USER'),
-  password: requiredEnv('SAUCE_STANDARD_PASSWORD')
-};
+function buildUser(usernameVariable, passwordVariable) {
+  return {
+    get username() {
+      return requiredEnv(usernameVariable);
+    },
 
-const lockedUser = {
-  username: requiredEnv('SAUCE_LOCKED_USER'),
-  password: requiredEnv('SAUCE_LOCKED_PASSWORD')
-};
+    get password() {
+      return requiredEnv(passwordVariable);
+    }
+  };
+}
+
+const standardUser = buildUser(
+  'SAUCE_STANDARD_USER',
+  'SAUCE_STANDARD_PASSWORD'
+);
+
+const lockedUser = buildUser(
+  'SAUCE_LOCKED_USER',
+  'SAUCE_LOCKED_PASSWORD'
+);
 
 const users = {
   standard: standardUser,

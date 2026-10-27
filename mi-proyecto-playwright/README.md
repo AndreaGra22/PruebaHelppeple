@@ -121,6 +121,88 @@
 
 Se utilizó ChatGPT como herramienta de apoyo para estructurar el proyecto, desarrollar y depurar código de Playwright, analizar errores de ejecución y preparar la documentación técnica y la estrategia de calidad. Las ejecuciones y los resultados deben verificarse en el entorno local antes de ser reportados como definitivos.
 
-### 2. Estado de entrega
 
-La solución cuenta con una base de automatización funcional y seis escenarios definidos. La entrega se considera en proceso de ajuste hasta completar la demostración de persistencia, generar y conservar las evidencias solicitadas, eliminar las pruebas ajenas al alcance y verificar la ejecución final de las suites.
+# Evidencia de fallo controlado
+
+## Objetivo
+
+Demostrar que Playwright detecta una aserción fallida y conserva los
+artefactos necesarios para investigar el resultado.
+
+## Reproducción
+
+Desde la raíz del proyecto, ejecutar:
+
+```powershell
+npm run demo:failure
+```
+
+## Resultado esperado
+
+La prueba debe fallar de forma intencional, devolver un código de salida
+distinto de cero y generar una captura de pantalla y una traza.
+
+## Resultado observado
+
+Playwright esperaba una URL que coincidiera con `/esta-url-no-existe/`,
+pero la aplicación se encontraba en:
+
+`https://www.saucedemo.com/inventory.html`
+
+La aserción falló y Playwright generó la captura, el video, el contexto
+del error y la traza.
+
+## Clasificación
+
+Fallo controlado de automatización. No corresponde a un defecto real
+de SauceDemo.
+
+## Artefactos
+
+- `test-failed-1.png`: captura de pantalla del fallo.
+- `trace.zip`: traza para diagnóstico.
+- `video.webm`: grabación de la ejecución.
+- `error-context.md`: contexto de la falla.
+- `html-report/`: reporte HTML de la ejecución controlada.
+# Evidencia de fallo controlado
+
+## Objetivo
+
+Demostrar que Playwright detecta una aserción fallida y conserva los
+artefactos necesarios para investigar el resultado.
+
+## Reproducción
+
+Desde la raíz del proyecto, ejecutar:
+
+```powershell
+npm run demo:failure
+```
+
+## Resultado esperado
+
+La prueba debe fallar de forma intencional, devolver un código de salida
+distinto de cero y generar una captura de pantalla y una traza.
+
+## Resultado observado
+
+Playwright esperaba una URL que coincidiera con `/esta-url-no-existe/`,
+pero la aplicación se encontraba en:
+
+`https://www.saucedemo.com/inventory.html`
+
+La aserción falló y Playwright generó la captura, el video, el contexto
+del error y la traza.
+
+## Clasificación
+
+Fallo controlado de automatización. No corresponde a un defecto real
+de SauceDemo.
+
+## Artefactos
+
+- `test-failed-1.png`: captura de pantalla del fallo.
+- `trace.zip`: traza para diagnóstico.
+- `video.webm`: grabación de la ejecución.
+- `error-context.md`: contexto de la falla.
+- `html-report/`: reporte HTML de la ejecución controlada.
