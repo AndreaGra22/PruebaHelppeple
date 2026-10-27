@@ -121,6 +121,3 @@
 
 Se utilizó ChatGPT como herramienta de apoyo para estructurar el proyecto, desarrollar y depurar código de Playwright, analizar errores de ejecución y preparar la documentación técnica y la estrategia de calidad. Las ejecuciones y los resultados deben verificarse en el entorno local antes de ser reportados como definitivos.
 
-### 2. Estado de entrega
-
-La solución cuenta con una base de automatización funcional y seis escenarios definidos. La entrega se considera en proceso de ajuste hasta completar la demostración de persistencia, generar y conservar las evidencias solicitadas, eliminar las pruebas ajenas al alcance y verificar la ejecución final de las suites.
