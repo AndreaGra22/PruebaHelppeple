@@ -31,20 +31,22 @@
             npm ci
             npx playwright install chromium
 
-  ##Variables necesarias
+  ## Variables necesarias
+
 El archivo .env.example debe incluir, como mínimo, las siguientes variables:
-# Ambiente de pruebas
+
+- Ambiente de pruebas
 TEST_ENV=demo
 BASE_URL_DEMO=https://www.saucedemo.com
 
-# Perfil alternativo de ejemplo (no es un ambiente funcional)
+- Perfil alternativo de ejemplo (no es un ambiente funcional)
 BASE_URL_EXAMPLE=https://example.invalid
 
-# Usuario de demostración con acceso permitido
+- Usuario de demostración con acceso permitido
 SAUCE_STANDARD_USER=standard_user
 SAUCE_STANDARD_PASSWORD=secret_sauce
 
-# Usuario de demostración bloqueado
+- Usuario de demostración bloqueado
 SAUCE_LOCKED_USER=locked_out_user
 SAUCE_LOCKED_PASSWORD=secret_sauce
 
@@ -132,13 +134,13 @@ mi-proyecto-playwright/
 
         Ejecutar con Chromium visible
             node runner.js --env=demo --suite=smoke --headed
-# Ejecutar un caso a la vez
-npx playwright test tests/smoke/login.spec.js --workers=1 --reporter=list
-npx playwright test tests/smoke/access-rules.spec.js --workers=1 --reporter=list
-npx playwright test tests/smoke/checkout.spec.js --workers=1 --reporter=list
-npx playwright test tests/regression/checkout-validation.spec.js --workers=1 --reporter=list
-npx playwright test tests/regression/cart.spec.js --workers=1 --reporter=list
-npx playwright test tests/regression/product-sort.spec.js --workers=1 --reporter=list
+## Ejecutar un caso a la vez
+- npx playwright test tests/smoke/login.spec.js --workers=1 --reporter=list
+- npx playwright test tests/smoke/access-rules.spec.js --workers=1 --reporter=list
+- npx playwright test tests/smoke/checkout.spec.js --workers=1 --reporter=list
+- npx playwright test tests/regression/checkout-validation.spec.js --workers=1 --reporter=list
+- npx playwright test tests/regression/cart.spec.js --workers=1 --reporter=list
+- npx playwright test tests/regression/product-sort.spec.js --workers=1 --reporter=list
 
    ## Ambientes
         El archivo config/environments.js mantiene la configuración fuera de los casos.
