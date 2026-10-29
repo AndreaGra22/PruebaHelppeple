@@ -106,7 +106,7 @@ La estructura relevante del proyecto es la siguiente.
 │   │   ├── cart.spec.js                 # QA05
 │   │   └── product-sort.spec.js         # QA06
 │   ├── demo-failure.spec.js             # Fallo controlado aislado
-│   ├── example.spec.js                  # Ejemplo ajeno al alcance; retirar o excluir
+│   ├── example.spec.js                 
 │   └── helpers.js
 ├── evidence/
 │   └── controlled-failure/
