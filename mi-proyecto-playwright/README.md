@@ -10,12 +10,12 @@
 
   ##  Reglas de negocio cubiertas
 
-        -El usuario estándar puede ingresar al inventario.
-       - El usuario bloqueado no puede iniciar sesión y recibe un mensaje de rechazo.
-       - El usuario puede agregar un producto al carrito y completar el checkout.
-       - El checkout no permite continuar si faltan datos obligatorios.
-        -Al retirar un producto del carrito, este deja de aparecer y se actualiza el contador.
-        -El catálogo puede ordenarse por precio ascendente y los precios quedan en orden numérico.
+        Un usuario estándar puede iniciar sesión y consultar el inventario.
+	Un usuario bloqueado no puede iniciar sesión y recibe un mensaje de rechazo.
+	Un usuario puede agregar un producto al carrito y recorrer el flujo de compra.
+	El formulario del checkout impide continuar cuando falta un dato obligatorio.
+	Al retirar un producto, este debe desaparecer del carrito y el contador debe reflejar el cambio.
+	El catálogo puede ordenarse por precio ascendente.
 
     Limitación importante: SauceDemo es un sitio de demostración de terceros. Este proyecto valida el recorrido de compra desde UI, el resumen y la confirmación final. La aplicación no proporciona un endpoint público de pedidos ni un historial adecuado para comprobar persistencia externa después de cerrar la sesión. No se declara cobertura API ni persistencia backend que no se haya verificado.
 
@@ -31,10 +31,22 @@
             npm ci
             npx playwright install chromium
 
-  ##  Usuarios de prueba
-        Propósito	          Usuario	    Contraseña
-        Acceso válido	    standard_user	secret_sauce
-        Usuario bloqueado	locked_out_user	secret_sauce
+  ##Variables necesarias
+El archivo .env.example debe incluir, como mínimo, las siguientes variables:
+# Ambiente de pruebas
+TEST_ENV=demo
+BASE_URL_DEMO=https://www.saucedemo.com
+
+# Perfil alternativo de ejemplo (no es un ambiente funcional)
+BASE_URL_EXAMPLE=https://example.invalid
+
+# Usuario de demostración con acceso permitido
+SAUCE_STANDARD_USER=standard_user
+SAUCE_STANDARD_PASSWORD=secret_sauce
+
+# Usuario de demostración bloqueado
+SAUCE_LOCKED_USER=locked_out_user
+SAUCE_LOCKED_PASSWORD=secret_sauce
 
   ##  Casos de prueba
 
@@ -69,6 +81,40 @@
 
     Cada prueba debe crear su propio contexto de navegador y preparar sus datos; no debe depender del resultado ni del orden de otra prueba. Para localizar los elementos se priorizan atributos estables data-test, roles y nombres accesibles. Las aserciones comprueban estado y contenido, no solo que un mensaje o clic haya ocurrido.
 
+## Estructura del proyecto
+La estructura relevante del proyecto es la siguiente. 
+mi-proyecto-playwright/
+├── config/
+│   └── environments.js
+├── pages/
+│   ├── LoginPage.js
+│   ├── InventoryPage.js
+│   ├── CartPage.js
+│   └── CheckoutPage.js
+├── test-data/
+│   ├── users.js
+│   └── customer.js
+├── tests/
+│   ├── smoke/
+│   │   ├── login.spec.js                # QA01
+│   │   ├── access-rules.spec.js         # QA02
+│   │   └── checkout.spec.js             # QA03
+│   ├── regression/
+│   │   ├── checkout-validation.spec.js  # QA04
+│   │   ├── cart.spec.js                 # QA05
+│   │   └── product-sort.spec.js         # QA06
+│   ├── demo-failure.spec.js             # Fallo controlado aislado
+│   ├── example.spec.js                  # Ejemplo ajeno al alcance; retirar o excluir
+│   └── helpers.js
+├── evidence/
+│   └── controlled-failure/
+├── playwright.config.js
+├── playwright.demo-failure.config.js
+├── .env.example
+├── .gitignore
+├── package.json
+├── package-lock.json
+└── README.md
 
    ## Ejecución desde consola
         Listar pruebas sin ejecutarlas
@@ -86,6 +132,13 @@
 
         Ejecutar con Chromium visible
             node runner.js --env=demo --suite=smoke --headed
+# Ejecutar un caso a la vez
+npx playwright test tests/smoke/login.spec.js --workers=1 --reporter=list
+npx playwright test tests/smoke/access-rules.spec.js --workers=1 --reporter=list
+npx playwright test tests/smoke/checkout.spec.js --workers=1 --reporter=list
+npx playwright test tests/regression/checkout-validation.spec.js --workers=1 --reporter=list
+npx playwright test tests/regression/cart.spec.js --workers=1 --reporter=list
+npx playwright test tests/regression/product-sort.spec.js --workers=1 --reporter=list
 
    ## Ambientes
         El archivo config/environments.js mantiene la configuración fuera de los casos.
@@ -106,8 +159,7 @@
         npm run report
 
   ## Publicación en GitHub
-        Crea un repositorio vacío en GitHub. Desde la raíz del proyecto:
-            git init -b main
+                   git init -b main
             git add .
             git status --short
             git commit -m "test: add HelpPeople QA Lead Playwright solution"
@@ -121,88 +173,3 @@
 
 Se utilizó ChatGPT como herramienta de apoyo para estructurar el proyecto, desarrollar y depurar código de Playwright, analizar errores de ejecución y preparar la documentación técnica y la estrategia de calidad. Las ejecuciones y los resultados deben verificarse en el entorno local antes de ser reportados como definitivos.
 
-
-# Evidencia de fallo controlado
-
-## Objetivo
-
-Demostrar que Playwright detecta una aserción fallida y conserva los
-artefactos necesarios para investigar el resultado.
-
-## Reproducción
-
-Desde la raíz del proyecto, ejecutar:
-
-```powershell
-npm run demo:failure
-```
-
-## Resultado esperado
-
-La prueba debe fallar de forma intencional, devolver un código de salida
-distinto de cero y generar una captura de pantalla y una traza.
-
-## Resultado observado
-
-Playwright esperaba una URL que coincidiera con `/esta-url-no-existe/`,
-pero la aplicación se encontraba en:
-
-`https://www.saucedemo.com/inventory.html`
-
-La aserción falló y Playwright generó la captura, el video, el contexto
-del error y la traza.
-
-## Clasificación
-
-Fallo controlado de automatización. No corresponde a un defecto real
-de SauceDemo.
-
-## Artefactos
-
-- `test-failed-1.png`: captura de pantalla del fallo.
-- `trace.zip`: traza para diagnóstico.
-- `video.webm`: grabación de la ejecución.
-- `error-context.md`: contexto de la falla.
-- `html-report/`: reporte HTML de la ejecución controlada.
-# Evidencia de fallo controlado
-
-## Objetivo
-
-Demostrar que Playwright detecta una aserción fallida y conserva los
-artefactos necesarios para investigar el resultado.
-
-## Reproducción
-
-Desde la raíz del proyecto, ejecutar:
-
-```powershell
-npm run demo:failure
-```
-
-## Resultado esperado
-
-La prueba debe fallar de forma intencional, devolver un código de salida
-distinto de cero y generar una captura de pantalla y una traza.
-
-## Resultado observado
-
-Playwright esperaba una URL que coincidiera con `/esta-url-no-existe/`,
-pero la aplicación se encontraba en:
-
-`https://www.saucedemo.com/inventory.html`
-
-La aserción falló y Playwright generó la captura, el video, el contexto
-del error y la traza.
-
-## Clasificación
-
-Fallo controlado de automatización. No corresponde a un defecto real
-de SauceDemo.
-
-## Artefactos
-
-- `test-failed-1.png`: captura de pantalla del fallo.
-- `trace.zip`: traza para diagnóstico.
-- `video.webm`: grabación de la ejecución.
-- `error-context.md`: contexto de la falla.
-- `html-report/`: reporte HTML de la ejecución controlada.
