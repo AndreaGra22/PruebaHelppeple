@@ -1,4 +1,4 @@
-## Prueba técnica Líder QA — HelpPeople
+## Prueba técnica  QA — HelpPeople
 
     Automatización web con Playwright Test, Node.js, JavaScript y Chromium, usando SauceDemo como aplicación de práctica.
 
@@ -85,7 +85,7 @@ SAUCE_LOCKED_PASSWORD=secret_sauce
 
 ## Estructura del proyecto
 La estructura relevante del proyecto es la siguiente. 
-mi-proyecto-playwright/
+```mi-proyecto-playwright/
 ├── config/
 │   └── environments.js
 ├── pages/
@@ -117,7 +117,7 @@ mi-proyecto-playwright/
 ├── package.json
 ├── package-lock.json
 └── README.md
-
+```
    ## Ejecución desde consola
         Listar pruebas sin ejecutarlas
             node runner.js --env=demo --suite=regression --list
